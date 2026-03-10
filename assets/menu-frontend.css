@@ -1,0 +1,130 @@
+/* =====================================================
+   FCC Cafe Menu — Frontend Styles
+   ===================================================== */
+
+.fcc-menu-wrap {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.fcc-menu-category {
+    margin-bottom: 3rem;
+}
+
+.fcc-category-title {
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin-bottom: 0.25rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid currentColor;
+}
+
+.fcc-category-desc {
+    color: #666;
+    margin-bottom: 1.25rem;
+    font-style: italic;
+}
+
+.fcc-menu-items {
+    display: grid;
+    gap: 0;
+}
+
+.fcc-menu-item {
+    position: relative;
+    padding: 1rem 0;
+    border-bottom: 1px solid #eee;
+}
+
+.fcc-menu-item:last-child {
+    border-bottom: none;
+}
+
+.fcc-menu-item.fcc-happy-hour {
+    background: #fffbea;
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+    border-radius: 6px;
+    border-bottom: 1px solid #f5e79e;
+}
+
+.fcc-badge-happy {
+    display: inline-block;
+    background: #f59e0b;
+    color: #fff;
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 2px 7px;
+    border-radius: 3px;
+    margin-bottom: 4px;
+}
+
+.fcc-item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.fcc-item-title {
+    font-size: 1.05rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+.fcc-item-pricing {
+    display: flex;
+    gap: 1rem;
+    flex-shrink: 0;
+}
+
+.fcc-price-group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    line-height: 1.2;
+}
+
+.fcc-size {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    color: #888;
+}
+
+.fcc-price {
+    font-weight: 700;
+    font-size: 1rem;
+}
+
+.fcc-item-desc {
+    margin: 0.35rem 0 0;
+    color: #555;
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+
+.fcc-item-allergens {
+    margin: 0.35rem 0 0;
+    font-size: 0.8rem;
+    color: #888;
+}
+
+/* Responsive */
+@media (max-width: 500px) {
+    .fcc-item-header {
+        flex-direction: column;
+        gap: 0.25rem;
+    }
+
+    .fcc-item-pricing {
+        flex-direction: row;
+    }
+
+    .fcc-price-group {
+        align-items: flex-start;
+    }
+}
