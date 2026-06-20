@@ -19,7 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) exit;
  *   4. Attach the plugin .zip as a release asset.
  *   5. WordPress will detect the update within 12 hours (or force-check via Plugins → Check Again).
  */
-class FCC_GitHub_Updater {
+class FCC_Menu_GitHub_Updater {
 
     private string $plugin_file;
     private string $plugin_slug;
