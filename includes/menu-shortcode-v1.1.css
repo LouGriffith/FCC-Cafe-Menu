@@ -1,0 +1,89 @@
+/* Fancy Cat Cafe — Menu Shortcode Styles
+   Version: 1.1
+   Place this file at: your-plugin/assets/css/menu-shortcode.css
+*/
+
+/* ── Category ──────────────────────────────────────────────────────────────── */
+.fcc-menu__category {
+    margin-bottom: 3rem;
+}
+
+.fcc-menu__category-title {
+    margin-bottom: 1.25rem;
+}
+
+/* ── Items grid ────────────────────────────────────────────────────────────── */
+.fcc-menu__items {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+}
+
+.fcc-menu__items--two-col {
+    grid-template-columns: 1fr 1fr;
+}
+
+@media ( max-width: 640px ) {
+    .fcc-menu__items--two-col {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ── Individual item ───────────────────────────────────────────────────────── */
+.fcc-menu__item {
+    padding-bottom: 1.25rem;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+.fcc-menu__item-header {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.25rem;
+}
+
+.fcc-menu__item-name {
+    margin: 0;
+    font-size: 1.1rem;
+}
+
+.fcc-menu__item-description {
+    margin: 0.25rem 0 0.5rem;
+    color: #666;
+    font-size: 0.9rem;
+}
+
+/* ── Pricing ───────────────────────────────────────────────────────────────── */
+.fcc-menu__pricing {
+    display: flex;
+    gap: 1.25rem;
+    margin-top: 0.4rem;
+}
+
+.fcc-menu__price-option {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.fcc-menu__size {
+    font-size: 0.85rem;
+    color: #888;
+}
+
+.fcc-menu__price {
+    font-weight: 600;
+}
+
+/* ── Happy hour badge ──────────────────────────────────────────────────────── */
+.fcc-menu__happy-hour-badge {
+    display: inline-block;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    background: #f59e0b;
+    color: #fff;
+    padding: 2px 8px;
+    border-radius: 99px;
+}

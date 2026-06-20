@@ -33,20 +33,25 @@ class FCC_Menu_Shortcodes {
      * Attributes:
      *   menu            = comma-separated fcc_menu_name slugs  (default: all)
      *   category        = comma-separated fcc_menu_category slugs (default: all)
+     *   columns         = 1 or 2  (default: 1)
      *   show_happy_hour = "only" | "false" (all)  default: false
      *
      * Examples:
      *   [fcc_menu]
-     *   [fcc_menu menu="drink-menu"]
-     *   [fcc_menu menu="drink-menu" category="coffee,tea"]
+     *   [fcc_menu category="coffee" columns="2"]
+     *   [fcc_menu menu="drink-menu" category="coffee,tea" columns="2"]
      *   [fcc_menu show_happy_hour="only"]
      */
     public function render_menu( $atts ) {
         $atts = shortcode_atts( [
             'menu'            => '',
             'category'        => '',
+            'columns'         => '1',
             'show_happy_hour' => 'false',
         ], $atts, 'fcc_menu' );
+
+        $columns     = intval( $atts['columns'] ) === 2 ? 2 : 1;
+        $items_class = $columns === 2 ? 'fcc-menu-items fcc-menu-items--two-col' : 'fcc-menu-items';
 
         // Determine which categories to loop over
         $cat_args = [
@@ -127,7 +132,7 @@ class FCC_Menu_Shortcodes {
             if ( ! empty( $cat->description ) ) {
                 echo '<p class="fcc-category-desc">' . esc_html( $cat->description ) . '</p>';
             }
-            echo '<div class="fcc-menu-items">';
+            echo '<div class="' . esc_attr( $items_class ) . '">';
 
             while ( $items->have_posts() ) {
                 $items->the_post();
@@ -149,6 +154,7 @@ class FCC_Menu_Shortcodes {
         $atts = shortcode_atts( [
             'category' => '',
             'menu'     => '',
+            'columns'  => '1',
         ], $atts, 'fcc_menu_category' );
         return $this->render_menu( $atts );
     }
@@ -162,29 +168,55 @@ class FCC_Menu_Shortcodes {
         $price2      = get_post_meta( $post_id, '_fcc_price_option_2', true );
         $allergens   = get_post_meta( $post_id, '_fcc_allergen_info', true );
         $is_happy    = get_post_meta( $post_id, '_fcc_is_happy_hour', true );
+
+        $has_price1  = $price1 !== '' && $price1 !== false;
+        $has_price2  = $price2 !== '' && $price2 !== false;
+        $has_pricing = $size1 || $has_price1 || $size2 || $has_price2;
         ?>
         <div class="fcc-menu-item<?php echo $is_happy ? ' fcc-happy-hour' : ''; ?>">
-            <?php if ( $is_happy ) : ?>
-                <span class="fcc-badge-happy">Happy Hour</span>
-            <?php endif; ?>
 
-            <div class="fcc-item-header">
-                <h3 class="fcc-item-title"><?php echo esc_html( $title ); ?></h3>
-                <div class="fcc-item-pricing">
-                    <?php if ( $size1 || $price1 ) : ?>
-                        <div class="fcc-price-group">
-                            <?php if ( $size1 ) : ?><span class="fcc-size"><?php echo esc_html( $size1 ); ?></span><?php endif; ?>
-                            <?php if ( $price1 ) : ?><span class="fcc-price">$<?php echo number_format( (float) $price1, 2 ); ?></span><?php endif; ?>
-                        </div>
-                    <?php endif; ?>
-                    <?php if ( $size2 || $price2 ) : ?>
-                        <div class="fcc-price-group">
-                            <?php if ( $size2 ) : ?><span class="fcc-size"><?php echo esc_html( $size2 ); ?></span><?php endif; ?>
-                            <?php if ( $price2 ) : ?><span class="fcc-price">$<?php echo number_format( (float) $price2, 2 ); ?></span><?php endif; ?>
-                        </div>
-                    <?php endif; ?>
+            <?php if ( $has_pricing ) : ?>
+                <div class="fcc-item-header">
+                    <span class="fcc-item-title">
+                        <?php echo esc_html( $title ); ?>
+                        <?php if ( $is_happy ) : ?>
+                            <span class="fcc-badge-happy">Happy Hour</span>
+                        <?php endif; ?>
+                    </span>
+                    <span class="fcc-dot-leader"></span>
+                    <span class="fcc-item-pricing">
+                        <?php if ( $size1 || $has_price1 ) : ?>
+                            <span class="fcc-price-group">
+                                <?php if ( $size1 ) : ?>
+                                    <span class="fcc-size"><?php echo esc_html( $size1 ); ?></span>
+                                <?php endif; ?>
+                                <?php if ( $has_price1 ) : ?>
+                                    <span class="fcc-price">$<?php echo number_format( (float) $price1, 2 ); ?></span>
+                                <?php endif; ?>
+                            </span>
+                        <?php endif; ?>
+                        <?php if ( $size2 || $has_price2 ) : ?>
+                            <span class="fcc-price-group">
+                                <?php if ( $size2 ) : ?>
+                                    <span class="fcc-size"><?php echo esc_html( $size2 ); ?></span>
+                                <?php endif; ?>
+                                <?php if ( $has_price2 ) : ?>
+                                    <span class="fcc-price">$<?php echo number_format( (float) $price2, 2 ); ?></span>
+                                <?php endif; ?>
+                            </span>
+                        <?php endif; ?>
+                    </span>
                 </div>
-            </div>
+            <?php else : ?>
+                <div class="fcc-item-header fcc-item-header--no-price">
+                    <span class="fcc-item-title">
+                        <?php echo esc_html( $title ); ?>
+                        <?php if ( $is_happy ) : ?>
+                            <span class="fcc-badge-happy">Happy Hour</span>
+                        <?php endif; ?>
+                    </span>
+                </div>
+            <?php endif; ?>
 
             <?php if ( $description ) : ?>
                 <p class="fcc-item-desc"><?php echo esc_html( $description ); ?></p>
@@ -193,6 +225,7 @@ class FCC_Menu_Shortcodes {
             <?php if ( $allergens ) : ?>
                 <p class="fcc-item-allergens"><strong>Allergens:</strong> <?php echo esc_html( $allergens ); ?></p>
             <?php endif; ?>
+
         </div>
         <?php
     }

@@ -1,0 +1,68 @@
+/* FCC Cafe Menu — Export / Import Admin Styles */
+
+.fcc-export-import .fcc-card {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 24px;
+    margin-top: 20px;
+    max-width: 900px;
+}
+
+.fcc-export-import .fcc-card h2 {
+    margin-top: 0;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #eee;
+}
+
+/* ── Duplicate review ──────────────────────────────────────────────────────── */
+.fcc-duplicate-review {
+    max-width: 900px;
+}
+
+.fcc-diff {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin: 20px 0;
+}
+
+.fcc-diff-col h3 {
+    margin-top: 0;
+    font-size: 13px;
+    text-transform: uppercase;
+    color: #666;
+    letter-spacing: .5px;
+}
+
+.fcc-preview-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+}
+
+.fcc-preview-table th,
+.fcc-preview-table td {
+    padding: 6px 8px;
+    border-bottom: 1px solid #eee;
+    text-align: left;
+    vertical-align: top;
+}
+
+.fcc-preview-table th {
+    width: 35%;
+    color: #666;
+    font-weight: 600;
+}
+
+/* ── Decision buttons ──────────────────────────────────────────────────────── */
+.fcc-decision-buttons {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-top: 16px;
+}
+
+.fcc-decision-buttons .button-primary {
+    order: -1;
+}

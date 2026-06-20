@@ -128,3 +128,15 @@
         align-items: flex-start;
     }
 }
+
+.fcc-menu__items--two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.25rem;
+}
+
+@media ( max-width: 640px ) {
+    .fcc-menu__items--two-col {
+        grid-template-columns: 1fr;
+    }
+}
