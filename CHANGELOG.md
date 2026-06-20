@@ -5,6 +5,29 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.0.0/).
 
 ---
 
+## [1.4.0] — 2026-06-19
+
+### Added
+- Google Sheets sync (`admin/class-sheets-sync.php`) — new **Cafe Menu → Sheets Sync** admin page
+- Hourly WP-Cron job pulls menu data from a Google Sheet and syncs it into `fcc_menu` posts
+- Sheet is treated as the source of truth:
+  - New rows create new posts
+  - Rows matching an existing post by name (case-insensitive) update that post's meta and category
+  - Rows removed from the Sheet move the matching post to trash; re-adding the row restores it
+- Authenticates via a Google service account using a hand-rolled RS256 JWT signer (`openssl_sign`) and `wp_remote_post`/`wp_remote_get` — no Composer or external libraries required, consistent with the plugin's existing dependency-free approach
+- Access tokens cached via WP transients to avoid re-authenticating on every request
+- Settings page allows configuring: enable/disable sync, Sheet ID, sheet/tab name, and the server path to the credentials JSON file
+- Manual "Sync Now" button for on-demand syncing outside the hourly schedule
+- Sync log stored and displayed showing created / updated / trashed / error counts plus a per-item message log
+- Credentials file path is expected to live outside the public web root or behind an `.htaccess` `Deny from all` rule — the settings page checks and displays whether the file is found
+- Cron event cleared automatically on plugin deactivation
+
+### Sheet column format
+Row 1 headers (exact names, case-insensitive):
+`name | category | description | size_1 | price_1 | size_2 | price_2 | is_happy_hour | allergen_info`
+
+---
+
 ## [1.3.0] — 2026-06-19
 
 ### Added

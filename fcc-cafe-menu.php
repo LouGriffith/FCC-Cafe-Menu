@@ -3,7 +3,7 @@
  * Plugin Name: FCC Cafe Menu
  * Plugin URI:  https://lougriffith.com
  * Description: Manage the Fancy Cat Cafe menu. Organize items across menus and categories, set sizes and pricing, flag happy hour items, and display the full menu or individual sections anywhere on your site using shortcodes.
- * Version:     1.3.0
+ * Version:     1.4.0
  * Author:      Lou Griffith
  * Author URI:  https://lougriffith.com
  * Text Domain: fcc-cafe-menu
@@ -12,7 +12,7 @@
 
 if ( ! defined( 'ABSPATH' ) ) exit;
 
-define( 'FCC_MENU_VERSION', '1.3.0' );
+define( 'FCC_MENU_VERSION', '1.4.0' );
 define( 'FCC_MENU_DIR', plugin_dir_path( __FILE__ ) );
 define( 'FCC_MENU_URL', plugin_dir_url( __FILE__ ) );
 
@@ -26,6 +26,7 @@ require_once FCC_MENU_DIR . 'includes/class-menu-shortcode-v1.2.php';
 require_once FCC_MENU_DIR . 'admin/class-admin-columns.php';
 require_once FCC_MENU_DIR . 'admin/class-quick-edit.php';
 require_once FCC_MENU_DIR . 'admin/class-export-import.php';
+require_once FCC_MENU_DIR . 'admin/class-sheets-sync.php';
 
 // GitHub auto-updater
 new FCC_Menu_GitHub_Updater( __FILE__, 'LouGriffith', 'fcc-cafe-menu' );
@@ -38,3 +39,9 @@ FCC_Menu_Bricks_Tags::get_instance();
 FCC_Menu_Admin_Columns::get_instance();
 FCC_Menu_Quick_Edit::get_instance();
 FCC_Menu_Export_Import::get_instance();
+FCC_Menu_Sheets_Sync::get_instance();
+
+// Clear scheduled cron on plugin deactivation
+register_deactivation_hook( __FILE__, function() {
+    wp_clear_scheduled_hook( 'fcc_menu_sheets_sync_cron' );
+} );
